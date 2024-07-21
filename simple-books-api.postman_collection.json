@@ -1,0 +1,575 @@
+{
+	"info": {
+		"_postman_id": "b3bcd548-343c-4390-824c-05a78a480021",
+		"name": "simple-books-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23691717",
+		"_collection_link": "https://winter-star-814110.postman.co/workspace/MyFavWorkspace~f2d4267b-64c6-43ae-b9d1-ce9278086ee6/collection/23691717-b3bcd548-343c-4390-824c-05a78a480021?action=share&source=collection_link&creator=23691717"
+	},
+	"item": [
+		{
+			"name": "GetStatus",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response=pm.response.json();\r",
+							"\r",
+							"console.log(response.status)\r",
+							"\r",
+							"pm.test(\"status should be Ok \" , () => {\r",
+							"pm.expect(response.status).to.eql(\"OK\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/status",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetWelcome Message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response=pm.response.json();\r",
+							"\r",
+							"pm.test(\"Verify the Message\"), ()=>{\r",
+							"    pm.expect(response.body).have(message, \"Welcome to the Simple Books API.\")\r",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}",
+					"host": [
+						"{{baseUrl}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllBooks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response=pm.response.json();\r",
+							"\r",
+							"pm.test('Verify IDs of All Books', () => {\r",
+							"    pm.expect(response[0].id).to.eql(1);\r",
+							"    pm.expect(response[1].id).to.eql(2);\r",
+							"    pm.expect(response[2].id).to.eql(3);\r",
+							"    pm.expect(response[3].id).to.eql(4);\r",
+							"    pm.expect(response[4].id).to.eql(5);\r",
+							"    pm.expect(response[5].id).to.eql(6);\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify name', () => {\r",
+							"    pm.expect(response[0].name).to.eql('The Russian');\r",
+							"    pm.expect(response[1].name).to.eql('Just as I Am');\r",
+							"    pm.expect(response[2].name).to.eql('The Vanishing Half');\r",
+							"    pm.expect(response[3].name).to.eql('The Midnight Library');\r",
+							"    pm.expect(response[4].name).to.eql('Untamed');\r",
+							"    pm.expect(response[5].name).to.eql('Viscount Who Loved Me');\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify type', () => {\r",
+							"    pm.expect(response[0].type).to.eql('fiction');\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify availability', () => {\r",
+							"    pm.expect(response[0].available).to.eql(true);\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/books",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"books"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a single bookById",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test('Verify ID', () => {\r",
+							"    pm.expect(response.id).to.eql(2);\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify name', () => {\r",
+							"    pm.expect(response.name).to.eql('Just as I Am');\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify author', () => {\r",
+							"    pm.expect(response.author).to.eql('Cicely Tyson');\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify type', () => {\r",
+							"    pm.expect(response.type).to.eql('non-fiction');\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify price', () => {\r",
+							"    pm.expect(response.price).to.eql(20.33);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Verify current-stock\",  () => {\r",
+							"  pm.expect(response['current-stock']).to.eql(0);\r",
+							"});\r",
+							"\r",
+							"pm.test('Verify availability', () => {\r",
+							"    pm.expect(response.available).to.eql(false);\r",
+							"})\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/books/2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"books",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "API Authentication",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Verify the Message\", function () {\r",
+							"    pm.expect(response).to.have.property(\"accessToken\");\r",
+							"});\r",
+							"\r",
+							"pm.globals.set(\"accessToken\", response.accessToken);// Generates a random email using a combination of a random string and a common domain\r",
+							"/*\r",
+							"function generateRandomEmail() {\r",
+							"    var randomString = Math.random().toString(36).substring(7);\r",
+							"    return randomString + \"@example.com\";\r",
+							"}\r",
+							"\r",
+							"pm.test(\"Generated random email is valid\", function () {\r",
+							"    var randomEmail = generateRandomEmail();\r",
+							"    pm.expect(randomEmail).to.be.a('string').and.to.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/);\r",
+							"});\r",
+							"*/"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"//pm.variables.replaceIn('{{$randomFirstName}}')\r",
+							"pm.globals.set(\"randomName\",pm.variables.replaceIn('{{$randomFirstName}}') );\r",
+							"\r",
+							"const email = \"{{$randomEmail}}\"\r",
+							"pm.environment.set(\"email\", email);\r",
+							"pm.globals.set(\"randomEmail\",pm.variables.replaceIn('{{$randomEmail}}') );\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"clientName\": \"{{randomName}}\",\r\n   \"clientEmail\": \"{{randomEmail}}\"\r\n  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api-clients/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api-clients",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Veify Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Verify created\",  () => {\r",
+							"   pm.expect(response.created).to.eql(true)\r",
+							"});\r",
+							"\r",
+							"pm.globals.set(\"orderId\", response.orderId);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"bookId\": 3,\r\n  \"customerName\": \"{{$randomFullName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a single bookByOrderID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Veify Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Book",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \r\n  \"customerName\": \"{{$randomFirstName}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/orders/:orderId",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"orders",
+						":orderId"
+					],
+					"variable": [
+						{
+							"key": "orderId",
+							"value": "{{orderId}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllBooks_usingQueryParam",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test('Verify ID', () => {\r",
+							"    pm.expect(response[0].id).to.eql(1);\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify name', () => {\r",
+							"    pm.expect(response[0].name).to.eql('The Russian');\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify type', () => {\r",
+							"    pm.expect(response[0].type).to.eql('fiction');\r",
+							"})\r",
+							"\r",
+							"pm.test('Verify availability', () => {\r",
+							"    pm.expect(response[0].available).to.eql(true);\r",
+							"})\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/books?type=fiction&limit=1",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"books"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "fiction"
+						},
+						{
+							"key": "limit",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://simple-books-api.glitch.me"
+		}
+	]
+}
